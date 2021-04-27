@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # wan_failback
-# Version 1.1.1
+# Version 1.1.2
 #
 # Copyright (c) 2021 Ryan Adams
 # All rights reserved.
@@ -32,18 +32,18 @@
 primary_wan_if="em0"
 backup_wan_if="ue0"
 
-logger wan_failback script running
+#logger wan_failback script running
 wan2_ipaddress=`ifconfig ${backup_wan} | grep 'inet ' | awk '{ print $2}' | cut -d'/' -f1`
 default_gw=`netstat -rn | grep default | awk '{print $4}'`
 if [ ${default_gw} != ${primary_wan_if} ]; then
-	echo 'Primary WAN (' ${primary_wan_if} ')  is down; exiting'
+	echo 'Primary WAN ('${primary_wan_if}')  is down; exiting'
 	exit 0
 fi
-echo 'Primary WAN is up; checking for active states on Backup WAN (' ${backup_wan_if} ')'
+echo 'Primary WAN is up; checking for active states on Backup WAN ('${backup_wan_if}')'
 backup_wan_states=`pfctl -i ${backup_wan_if} -ss |  grep -v -e ':853' -e ':53' -e 'icmp' -e ':67'`
 echo ${backup_wan_states}
 if [ -n "${backup_wan_states}" ]; then
-	echo 'Active states exist on Backup WAN; killing states on Backup WAN (' ${backup_wan_if} ')'
+	echo 'Active states exist on Backup WAN; killing states on Backup WAN ('${backup_wan_if}')'
 	logger 'wan_failback script is killing states on Backup WAN (' ${backup_wan_if} ')' 
 	/etc/rc.kill_states ${backup_wan_if} ${wan2_ipaddress}
 else
