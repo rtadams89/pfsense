@@ -45,7 +45,7 @@ backup_wan_states=`pfctl -i ${backup_wan_if} -ss |  grep -v -e ':853' -e ':53' -
 echo ${backup_wan_states}
 if [ -n "${backup_wan_states}" ]; then
 	echo 'Active states exist on Backup WAN; killing states on Backup WAN ('${backup_wan_if}')'
-	logger 'wan_failback script is killing states on Backup WAN (' ${backup_wan_if} ')' 
+	logger 'wan_failback script is killing states on Backup WAN (' ${backup_wan_states} ')' 
 	/etc/rc.kill_states ${backup_wan_if} ${wan2_ipaddress}
 else
 	echo 'No active states exist on Backup WAN; exiting'
