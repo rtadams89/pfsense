@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # wan_failback
-# Version 1.1.3
+# Version 1.1.4
 #
 # Copyright (c) 2021 Ryan Adams
 # All rights reserved.
@@ -26,7 +26,7 @@
 # Use the Cron package to set this script to run periodically.
 # Script excludes states related to DNS, DoT, ICMP, and DHCP from its
 # checks. If you wish to exclude other traffic that may be expected on
-# the backup WAN, see line 43 of this code.
+# the backup WAN, see line 44 of this code.
 
 
 primary_wan_if="em0"
